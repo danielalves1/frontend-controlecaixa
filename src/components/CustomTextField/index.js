@@ -39,7 +39,11 @@ export default function CustomTextField({ label, ...args }) {
         className="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
         {...args}
       />
-      <fieldset aria-hidden="true" ref={fieldSetRef} className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline">
+      <fieldset
+        aria-hidden="true"
+        ref={fieldSetRef}
+        className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+      >
         <legend className="css-1ftyaf0">
           <span>{label}</span>
         </legend>
