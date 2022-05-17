@@ -1,0 +1,15 @@
+.form-caixa--container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.form-caixa--content {
+  max-width: 90%;
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

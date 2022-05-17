@@ -1,0 +1,14 @@
+.home--container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: calc(100% - 130px);
+  flex-direction: column;
+}
+.box--content {
+  max-width: 90%;
+  min-width: 500px;
+  height: 100%;
+}
