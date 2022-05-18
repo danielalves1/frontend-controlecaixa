@@ -1,7 +1,7 @@
 import service from "../services";
 import validateSession from "../utils/validateSession";
 
-export async function getBalancoGeral() {
+export async function getBalancoGeral(ano) {
   let userData = validateSession.getLoggedUserData();
   if (typeof userData !== "object") {
     return {
@@ -10,7 +10,7 @@ export async function getBalancoGeral() {
       reason: "Não foi possível identificar o usuário logado",
     };
   }
-  return await service.request("/movimentacao/balanco", "GET", userData.token);
+  return await service.request(`/movimentacao/balanco${Number(ano) ? `/${ano}` : ""}`, "GET", userData.token);
 }
 
 export async function getMovimentacao(ano, mes, caixa) {

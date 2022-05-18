@@ -9,7 +9,7 @@ export const Item = C.styled(C.Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const CardMovimentacao = ({ entradas, saidas, balanco, title }) => {
+const CardMovimentacao = ({ entradas, saidas, balanco, title, filtroAno }) => {
   return (
     <Item>
       <C.Grid container spacing={1}>
@@ -18,24 +18,33 @@ const CardMovimentacao = ({ entradas, saidas, balanco, title }) => {
             <span style={{ padding: "0 10px", background: "#fff", borderRadius: "4px" }}>{title}</span>
           </C.Typography>
         </C.Grid>
-        <C.Grid item xs={6} sx={{ textAlign: "end" }}>
-          Entradas:
-        </C.Grid>
-        <C.Grid item xs={6} sx={{ textAlign: "end" }}>
-          {entradas?.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-        </C.Grid>
-        <C.Grid item xs={6} sx={{ textAlign: "end" }}>
-          Saídas:
-        </C.Grid>
-        <C.Grid item xs={6} sx={{ textAlign: "end" }}>
-          {saidas?.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-        </C.Grid>
-        <C.Divider />
-        <C.Grid item xs={6} sx={{ textAlign: "end" }}>
-          Saldo:
-        </C.Grid>
-        <C.Grid item xs={6} sx={{ textAlign: "end", color: (balanco || (entradas || 0) - (saidas || 0)) < 0 ? "#f00" : "inherit" }}>
-          {(balanco || (entradas || 0) - (saidas || 0)).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+        {filtroAno && (
+          <C.Grid item xs={5} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            {filtroAno}
+          </C.Grid>
+        )}
+        <C.Grid item xs={filtroAno ? 7 : 12} style={{ padding: "5px 16px" }}>
+          <C.Grid container>
+            <C.Grid item xs={6} sx={{ textAlign: "end" }}>
+              Entradas:
+            </C.Grid>
+            <C.Grid item xs={6} sx={{ textAlign: "end" }}>
+              {entradas?.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </C.Grid>
+            <C.Grid item xs={6} sx={{ textAlign: "end" }}>
+              Saídas:
+            </C.Grid>
+            <C.Grid item xs={6} sx={{ textAlign: "end" }}>
+              {saidas?.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </C.Grid>
+            <C.Divider />
+            <C.Grid item xs={6} sx={{ textAlign: "end" }}>
+              Saldo:
+            </C.Grid>
+            <C.Grid item xs={6} sx={{ textAlign: "end", color: (balanco || (entradas || 0) - (saidas || 0)) < 0 ? "#f00" : "inherit" }}>
+              {(balanco || (entradas || 0) - (saidas || 0)).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+            </C.Grid>
+          </C.Grid>
         </C.Grid>
       </C.Grid>
     </Item>

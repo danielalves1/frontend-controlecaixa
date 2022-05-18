@@ -6,7 +6,7 @@ import TableRow from "./TableRow";
 import formatCurrency from "../../bin/utils/formatCurrency";
 import PropTypes from "prop-types";
 
-function CustomGenericTable({ loading, options, fill, onRowClick, selectedRow }) {
+function CustomGenericTable({ loading, options, fill, selectedRow }) {
   const [data, setData] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [orderBy, setOrderBy] = React.useState({ field: "", order: "" });
@@ -108,7 +108,6 @@ function CustomGenericTable({ loading, options, fill, onRowClick, selectedRow })
                               : { backgroundColor: "#fdeded", color: "#5f2120" }),
                           }}
                           key={`tr-user-${item.id}`}
-                          onClick={() => onRowClick(item)}
                           selected={selectedRow?.id === item.id}
                         >
                           {options?.tableHeader?.map((headerItem, k) => (

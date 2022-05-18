@@ -56,7 +56,7 @@ const HomePage = () => {
   }
 
   function getBalancoGeral() {
-    movimentacaoController.getBalancoGeral().then((rs) => {
+    movimentacaoController.getBalancoGeral(filter.anoBalanco).then((rs) => {
       setBalanco(rs);
     });
   }
@@ -65,7 +65,7 @@ const HomePage = () => {
   useEffect(getCaixaList, []);
   useEffect(getAnoList, []);
   useEffect(getMovimentacao, [filter]);
-  useEffect(getBalancoGeral, [movimentacao]);
+  useEffect(getBalancoGeral, [movimentacao, filter.anoBalanco]);
 
   function handleMesClick(selected) {
     console.log({ selected, mes });
@@ -85,6 +85,29 @@ const HomePage = () => {
     if (filter[event.target.name] === "") delete filter[event.target.name];
     setFilter({ ...filter });
   };
+
+  const filtroAnoBalanco = (
+    <C.FormControl size="small" style={{ minWidth: 100 }}>
+      <C.InputLabel id="demo-simple-select-label">Ano</C.InputLabel>
+      <C.Select
+        color="primary"
+        defaultValue={filter.anoBalanco || "geral"}
+        value={filter.anoBalanco}
+        label="Ano"
+        name="anoBalanco"
+        onChange={handleSelectChange}
+      >
+        <C.MenuItem key={`anobalanco-geral`} value="geral">
+          Geral
+        </C.MenuItem>
+        {anoList.map((ano) => (
+          <C.MenuItem key={`caixa-${ano}`} value={ano}>
+            {ano}
+          </C.MenuItem>
+        ))}
+      </C.Select>
+    </C.FormControl>
+  );
 
   return (
     <div className="home--container">
@@ -143,7 +166,13 @@ const HomePage = () => {
             <CardMovimentacao title={`Entradas e Saídas do Mês`} entradas={getEntradas()} saidas={getSaidas()} />
           </C.Grid>
           <C.Grid item xs={6}>
-            <CardMovimentacao title="Balanço Geral" entradas={balanco?.entradas} saidas={balanco?.saidas} balanco={balanco?.balanco} />
+            <CardMovimentacao
+              filtroAno={filtroAnoBalanco}
+              title="Balanço Geral"
+              entradas={balanco?.entradas}
+              saidas={balanco?.saidas}
+              balanco={balanco?.balanco}
+            />
           </C.Grid>
           <C.Grid item xs={12}>
             <Movimentacao loading={loading} data={movimentacao} />

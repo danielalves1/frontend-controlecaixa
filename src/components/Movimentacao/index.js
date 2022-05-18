@@ -7,7 +7,7 @@ const Movimentacao = ({ data, loading }) => {
     { field: "tipo", type: "string", title: "Tipo", sort: true, props: {} },
     { field: "data", type: "date", title: "Data", sort: true, props: {} },
     { field: "descricao", type: "string", title: "Descrição", sort: true, props: {} },
-    { field: "valor", type: "string", title: "Email", sort: true, props: {} },
+    { field: "valor", type: "currency", title: "Valor", sort: true, props: {} },
   ];
   return (
     <C.Box>
