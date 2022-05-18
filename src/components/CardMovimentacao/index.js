@@ -41,7 +41,11 @@ const CardMovimentacao = ({ entradas, saidas, balanco, title, filtroAno, saldoin
             <C.Grid item xs={6} sx={{ textAlign: "end" }}>
               Saldo:
             </C.Grid>
-            <C.Grid item xs={6} sx={{ textAlign: "end", color: (balanco || (entradas || 0) - (saidas || 0)) < 0 ? "#f00" : "inherit" }}>
+            <C.Grid
+              item
+              xs={6}
+              sx={{ textAlign: "end", color: (balanco || (entradas || 0) - (saidas || 0) + (saldoinicial || 0)) < 0 ? "#f00" : "inherit" }}
+            >
               {(balanco || (entradas || 0) - (saidas || 0) + (saldoinicial || 0)).toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
