@@ -12,7 +12,7 @@ const FormCaixa = () => {
   }
 
   function handleValueChange(value, name) {
-    if (name === "saldoinicial") value = Number(value);
+    if (name === "saldoinicial") value = Number(value.replace(",", "."));
     caixa[name] = value;
 
     setCaixa({ ...caixa });

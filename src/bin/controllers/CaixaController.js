@@ -17,6 +17,7 @@ export async function cadastrarCaixa(caixa) {
       reason: "descrição não informada",
     };
   }
+  caixa.saldoinicial = Number(caixa.saldoinicial);
   return await service.request("/caixa", "POST", userData.token, caixa);
 }
 
