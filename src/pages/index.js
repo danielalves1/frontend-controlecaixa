@@ -15,6 +15,7 @@ const HomePage = () => {
   const [movimentacao, setMovimentacao] = useState([]);
   const [mes, setMes] = useState();
   const [balanco, setBalanco] = useState(0.0);
+  const [loading, setLoading] = useState(false);
 
   function getEntradas() {
     let total = 0.0;
@@ -47,9 +48,10 @@ const HomePage = () => {
   }
 
   function getMovimentacao() {
+    setLoading(true);
     movimentacaoController.getMovimentacao(filter.ano, filter.mes, filter.caixa).then((rs) => {
-      console.log({ rs, filter });
       if (Array.isArray(rs)) setMovimentacao(rs);
+      setLoading(false);
     });
   }
 
@@ -65,21 +67,22 @@ const HomePage = () => {
   useEffect(getMovimentacao, [filter]);
   useEffect(getBalancoGeral, [movimentacao]);
 
-  function handleMesClick(mes) {
-    if (mes === filter.mes) {
+  function handleMesClick(selected) {
+    console.log({ selected, mes });
+    if (selected === filter.mes) {
       setMes(undefined);
       delete filter.mes;
       setFilter({ ...filter });
     } else {
-      setMes(mes);
+      setMes(selected);
+      filter.mes = selected;
+      setFilter({ ...filter });
     }
-    filter.mes = mes;
-    setFilter({ ...filter });
   }
 
   const handleSelectChange = (event) => {
-    filter.caixa = event.target.value;
-    if (filter.caixa === "") delete filter.caixa;
+    filter[event.target.name] = event.target.value;
+    if (filter[event.target.name] === "") delete filter[event.target.name];
     setFilter({ ...filter });
   };
 
@@ -94,7 +97,14 @@ const HomePage = () => {
             <Item style={{ display: "flex", gap: "10px" }}>
               <C.FormControl size="small" style={{ minWidth: 100 }}>
                 <C.InputLabel id="demo-simple-select-label">Ano</C.InputLabel>
-                <C.Select color="primary" defaultValue={filter.ano || ""} value={filter.ano} label="Caixa" onChange={handleSelectChange}>
+                <C.Select
+                  color="primary"
+                  defaultValue={filter.ano || new Date().getFullYear()}
+                  value={filter.ano}
+                  label="Ano"
+                  name="ano"
+                  onChange={handleSelectChange}
+                >
                   {anoList.map((ano) => (
                     <C.MenuItem key={`caixa-${ano}`} value={ano}>
                       {ano}
@@ -105,6 +115,7 @@ const HomePage = () => {
               <C.FormControl size="small" style={{ minWidth: 200 }}>
                 <C.InputLabel id="demo-simple-select-label">Caixa</C.InputLabel>
                 <C.Select
+                  name="caixa"
                   color="primary"
                   defaultValue={filter.caixa || ""}
                   value={filter.caixa}
@@ -135,7 +146,7 @@ const HomePage = () => {
             <CardMovimentacao title="Balanço Geral" entradas={balanco?.entradas} saidas={balanco?.saidas} balanco={balanco?.balanco} />
           </C.Grid>
           <C.Grid item xs={12}>
-            <Movimentacao data={movimentacao} />
+            <Movimentacao loading={loading} data={movimentacao} />
           </C.Grid>
         </C.Grid>
       </C.Box>
