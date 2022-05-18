@@ -22,6 +22,7 @@ export async function getMovimentacao(ano, mes, caixa) {
       reason: "Não foi possível identificar o usuário logado",
     };
   }
+  caixa = caixa !== "todos" ? caixa : undefined;
   let filter = "";
   if (ano) filter += `?ano=${ano}`;
   if (mes) filter += filter !== "" ? `&mes=${mes}` : `?ano=${new Date().getFullYear()}&mes=${mes}`;

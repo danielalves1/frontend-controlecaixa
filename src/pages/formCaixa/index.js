@@ -12,7 +12,9 @@ const FormCaixa = () => {
   }
 
   function handleValueChange(value, name) {
+    if (name === "saldoinicial") value = Number(value);
     caixa[name] = value;
+
     setCaixa({ ...caixa });
   }
 
@@ -40,7 +42,7 @@ const FormCaixa = () => {
       </header>
       <div className="form-caixa--content">
         <C.TextField required label="Descricao" onChange={(e) => handleValueChange(e.target.value, "descricao")} />
-        <CustomTextField className="required" label="Saldo Inicial" name="valor" onValueChange={handleValueChange} />
+        <CustomTextField className="required" label="Saldo Inicial" name="saldoinicial" onValueChange={handleValueChange} />
         <C.Button onClick={handleSave} variant="contained">
           <C.Typography>Cadastrar</C.Typography>
         </C.Button>

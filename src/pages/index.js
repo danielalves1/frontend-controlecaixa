@@ -9,7 +9,8 @@ import Movimentacao from "../components/Movimentacao";
 const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
 const HomePage = () => {
-  const [filter, setFilter] = useState({ ano: new Date().getFullYear(), caixa: "" });
+  const [filter, setFilter] = useState({ ano: new Date().getFullYear(), caixa: "todos" });
+  const [saldoinicial, setSaldoinicial] = useState(0);
   const [caixaList, setCaixaList] = useState([]);
   const [anoList, setAnoList] = useState([]);
   const [movimentacao, setMovimentacao] = useState([]);
@@ -65,7 +66,7 @@ const HomePage = () => {
   useEffect(getCaixaList, []);
   useEffect(getAnoList, []);
   useEffect(getMovimentacao, [filter]);
-  useEffect(getBalancoGeral, [movimentacao, filter.anoBalanco]);
+  useEffect(getBalancoGeral, [filter.anoBalanco, movimentacao]);
 
   function handleMesClick(selected) {
     console.log({ selected, mes });
@@ -83,6 +84,14 @@ const HomePage = () => {
   const handleSelectChange = (event) => {
     filter[event.target.name] = event.target.value;
     if (filter[event.target.name] === "") delete filter[event.target.name];
+    if (event.target.name === "caixa") {
+      console.log(event.target.value);
+      let saldo = caixaList.filter((c) =>
+        ["", "todos"].includes(event.target.value) ? true : Number(c.id) === Number(event.target.value)
+      )[0].saldoinicial;
+      console.log(saldo);
+      setSaldoinicial(saldo);
+    }
     setFilter({ ...filter });
   };
 
@@ -140,12 +149,12 @@ const HomePage = () => {
                 <C.Select
                   name="caixa"
                   color="primary"
-                  defaultValue={filter.caixa || ""}
+                  defaultValue={filter.caixa || "todos"}
                   value={filter.caixa}
                   label="Caixa"
                   onChange={handleSelectChange}
                 >
-                  <C.MenuItem value="">Todos</C.MenuItem>
+                  <C.MenuItem value="todos">Todos</C.MenuItem>
                   {caixaList.map((caixa) => (
                     <C.MenuItem key={`caixa-${caixa.id}`} value={caixa.id}>
                       {caixa.id} - {caixa.descricao}
@@ -163,7 +172,12 @@ const HomePage = () => {
             </Item>
           </C.Grid>
           <C.Grid item xs={6}>
-            <CardMovimentacao title={`Entradas e Saídas do Mês`} entradas={getEntradas()} saidas={getSaidas()} />
+            <CardMovimentacao
+              title={`Entradas e Saídas do Mês`}
+              saldoinicial={saldoinicial}
+              entradas={getEntradas()}
+              saidas={getSaidas()}
+            />
           </C.Grid>
           <C.Grid item xs={6}>
             <CardMovimentacao

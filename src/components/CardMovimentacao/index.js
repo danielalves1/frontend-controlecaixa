@@ -9,7 +9,7 @@ export const Item = C.styled(C.Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const CardMovimentacao = ({ entradas, saidas, balanco, title, filtroAno }) => {
+const CardMovimentacao = ({ entradas, saidas, balanco, title, filtroAno, saldoinicial }) => {
   return (
     <Item>
       <C.Grid container spacing={1}>
@@ -42,7 +42,10 @@ const CardMovimentacao = ({ entradas, saidas, balanco, title, filtroAno }) => {
               Saldo:
             </C.Grid>
             <C.Grid item xs={6} sx={{ textAlign: "end", color: (balanco || (entradas || 0) - (saidas || 0)) < 0 ? "#f00" : "inherit" }}>
-              {(balanco || (entradas || 0) - (saidas || 0)).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              {(balanco || (entradas || 0) - (saidas || 0) + (saldoinicial || 0)).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
             </C.Grid>
           </C.Grid>
         </C.Grid>
