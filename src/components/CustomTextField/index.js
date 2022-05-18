@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import CurrencyInput from "react-currency-input-field";
 import "./style.scss";
 
-export default function CustomTextField({ label, ...args }) {
+export default function CustomTextField({ label, className, ...args }) {
   const labelRef = useRef(null);
   const fieldSetRef = useRef(null);
 
@@ -28,6 +28,7 @@ export default function CustomTextField({ label, ...args }) {
         data-shrink="false"
       >
         {label}
+        {className && className.includes("required") ? <span className="MuiInputLabel-asterisk MuiFormLabel-asterisk ">&nbsp;*</span> : ""}
       </label>
       <CurrencyInput
         onBlur={handleBlur}
@@ -36,7 +37,7 @@ export default function CustomTextField({ label, ...args }) {
         decimalSeparator=","
         groupSeparator="."
         decimalsLimit={2}
-        className="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+        className={`MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input ${className}`}
         {...args}
       />
       <fieldset

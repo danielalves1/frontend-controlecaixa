@@ -13,3 +13,14 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.MuiInputLabel-asterisk.MuiFormLabel-asterisk,
+.MuiFormLabel-asterisk {
+  color: #f00;
+}
+.required legend {
+  ::after {
+    content: "*";
+    color: #f00;
+  }
+}

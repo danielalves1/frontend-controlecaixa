@@ -39,8 +39,8 @@ const FormCaixa = () => {
         <h1>Cadastrar Caixa</h1>
       </header>
       <div className="form-caixa--content">
-        <C.TextField label="Descricao" onChange={(e) => handleValueChange(e.target.value, "descricao")} />
-        <CustomTextField label="Saldo Inicial" name="valor" onValueChange={handleValueChange} />
+        <C.TextField required label="Descricao" onChange={(e) => handleValueChange(e.target.value, "descricao")} />
+        <CustomTextField className="required" label="Saldo Inicial" name="valor" onValueChange={handleValueChange} />
         <C.Button onClick={handleSave} variant="contained">
           <C.Typography>Cadastrar</C.Typography>
         </C.Button>

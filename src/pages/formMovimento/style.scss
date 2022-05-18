@@ -1,0 +1,34 @@
+.form-movimento--container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.form-movimento--content {
+  max-width: 90%;
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .row-container {
+    border: 1px solid #c2c2c2;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  .MuiInputLabel-asterisk.MuiFormLabel-asterisk,
+  .MuiFormLabel-asterisk {
+    color: #f00;
+  }
+  .required legend {
+    ::after {
+      content: "*";
+      color: #f00;
+    }
+  }
+}

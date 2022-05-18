@@ -28,3 +28,27 @@ export async function getMovimentacao(ano, mes, caixa) {
   if (caixa) filter += `&caixa=${caixa}`;
   return await service.request(`/movimentacao${filter}`, "GET", userData.token);
 }
+
+export async function getAnosMovimentacao() {
+  let userData = validateSession.getLoggedUserData();
+  if (typeof userData !== "object") {
+    return {
+      error: true,
+      message: "por favor, saia do sistema e acesse para tentar novamente",
+      reason: "Não foi possível identificar o usuário logado",
+    };
+  }
+  return await service.request("/movimentacao/anos", "GET", userData.token);
+}
+
+export async function createMovimento(movimento) {
+  let userData = validateSession.getLoggedUserData();
+  if (typeof userData !== "object") {
+    return {
+      error: true,
+      message: "por favor, saia do sistema e acesse para tentar novamente",
+      reason: "Não foi possível identificar o usuário logado",
+    };
+  }
+  return await service.request("/movimentacao", "POST", userData.token, movimento);
+}

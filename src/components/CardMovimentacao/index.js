@@ -34,7 +34,7 @@ const CardMovimentacao = ({ entradas, saidas, balanco, title }) => {
         <C.Grid item xs={6} sx={{ textAlign: "end" }}>
           Saldo:
         </C.Grid>
-        <C.Grid item xs={6} sx={{ textAlign: "end" }}>
+        <C.Grid item xs={6} sx={{ textAlign: "end", color: (balanco || (entradas || 0) - (saidas || 0)) < 0 ? "#f00" : "inherit" }}>
           {(balanco || (entradas || 0) - (saidas || 0)).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
         </C.Grid>
       </C.Grid>

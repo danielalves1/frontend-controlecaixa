@@ -11,6 +11,7 @@ const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julh
 const HomePage = () => {
   const [filter, setFilter] = useState({ ano: new Date().getFullYear(), caixa: "" });
   const [caixaList, setCaixaList] = useState([]);
+  const [anoList, setAnoList] = useState([]);
   const [movimentacao, setMovimentacao] = useState([]);
   const [mes, setMes] = useState();
   const [balanco, setBalanco] = useState(0.0);
@@ -34,9 +35,13 @@ const HomePage = () => {
     return total;
   }
 
+  function getAnoList() {
+    movimentacaoController.getAnosMovimentacao().then((rs) => {
+      if (Array.isArray(rs)) setAnoList(rs);
+    });
+  }
   function getCaixaList() {
     caixaController.getCaixas().then((rs) => {
-      console.log({ caixas: rs });
       if (Array.isArray(rs)) setCaixaList(rs);
     });
   }
@@ -56,6 +61,7 @@ const HomePage = () => {
 
   useEffect(() => setMes(new Date().getMonth() + 1), []);
   useEffect(getCaixaList, []);
+  useEffect(getAnoList, []);
   useEffect(getMovimentacao, [filter]);
   useEffect(getBalancoGeral, [movimentacao]);
 
@@ -85,7 +91,17 @@ const HomePage = () => {
       <C.Box className="box--content">
         <C.Grid container spacing={2}>
           <C.Grid item xs={12}>
-            <Item>
+            <Item style={{ display: "flex", gap: "10px" }}>
+              <C.FormControl size="small" style={{ minWidth: 100 }}>
+                <C.InputLabel id="demo-simple-select-label">Ano</C.InputLabel>
+                <C.Select color="primary" defaultValue={filter.ano || ""} value={filter.ano} label="Caixa" onChange={handleSelectChange}>
+                  {anoList.map((ano) => (
+                    <C.MenuItem key={`caixa-${ano}`} value={ano}>
+                      {ano}
+                    </C.MenuItem>
+                  ))}
+                </C.Select>
+              </C.FormControl>
               <C.FormControl size="small" style={{ minWidth: 200 }}>
                 <C.InputLabel id="demo-simple-select-label">Caixa</C.InputLabel>
                 <C.Select
