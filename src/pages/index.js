@@ -45,6 +45,11 @@ const HomePage = () => {
   function getCaixaList() {
     caixaController.getCaixas().then((rs) => {
       if (Array.isArray(rs)) setCaixaList(rs);
+      let saldo = 0;
+      Array.from(rs).forEach((c) => {
+        saldo += c.saldoinicial;
+      });
+      setSaldoinicial(saldo);
     });
   }
 
