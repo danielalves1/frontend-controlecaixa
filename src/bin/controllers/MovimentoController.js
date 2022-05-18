@@ -13,7 +13,7 @@ export async function getBalancoGeral() {
   return await service.request("/movimentacao/balanco", "GET", userData.token);
 }
 
-export async function getMovimentacao(ano, mes) {
+export async function getMovimentacao(ano, mes, caixa) {
   let userData = validateSession.getLoggedUserData();
   if (typeof userData !== "object") {
     return {
@@ -25,5 +25,6 @@ export async function getMovimentacao(ano, mes) {
   let filter = "";
   if (ano) filter += `?ano=${ano}`;
   if (mes) filter += filter !== "" ? `&mes=${mes}` : `?ano=${new Date().getFullYear()}&mes=${mes}`;
+  if (caixa) filter += `&caixa=${caixa}`;
   return await service.request(`/movimentacao${filter}`, "GET", userData.token);
 }

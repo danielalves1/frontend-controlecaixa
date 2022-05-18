@@ -11,8 +11,9 @@ const FormCaixaPage = lazy(() => import("./pages/formCaixa"));
 const FormMovimentoPage = lazy(() => import("./pages/formMovimento"));
 
 const pages = [
+  { href: "/", icon: <I.Home />, name: "" },
   { href: "/caixa/form", name: "+ Cadastrar Caixa" },
-  { href: "/movimento/form", name: "+ Lançar Movimentação" },
+  { href: "/movimento/form", name: "+ Lançar Movimento" },
 ];
 
 function App() {
@@ -29,7 +30,10 @@ function App() {
             <C.Container maxWidth="xl">
               <C.Toolbar sx={{ gap: 5 }}>
                 <C.Typography textAlign="start" sx={{ flex: 1 }}>
-                  Controle de Caixa
+                  Controle de Caixa -
+                  <C.Tooltip arrow title="Usuário logado">
+                    <b>&nbsp;{validateSession.getLoggedUserData()?.nome}</b>
+                  </C.Tooltip>
                 </C.Typography>
                 <C.Box sx={{ flexGrow: 0 }}>
                   <C.Tooltip title="Sair">
@@ -45,7 +49,9 @@ function App() {
             <C.Paper className="options">
               {pages.map((page) => (
                 <C.Link href={page.href} key={page.href} variant="outlined" color="inherit">
-                  <C.Typography textAlign="center">{page.name}</C.Typography>
+                  <C.Typography textAlign="center">
+                    {page.icon} {page.name}
+                  </C.Typography>
                 </C.Link>
               ))}
             </C.Paper>

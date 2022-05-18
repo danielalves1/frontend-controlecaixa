@@ -1,31 +1,31 @@
 import React, { useRef } from "react";
 import CurrencyInput from "react-currency-input-field";
+import "./style.scss";
 
 export default function CustomTextField({ label, ...args }) {
   const labelRef = useRef(null);
   const fieldSetRef = useRef(null);
 
   function handleFocus() {
-    labelRef.current.style.marginTop = "-24px";
-    labelRef.current.style.fontSize = "0.75rem";
-    labelRef.current.style.backgroundColor = "#fff";
-    labelRef.current.style.padding = "0 5px";
+    labelRef.current.querySelector("label").classList.add("custom-focused");
+    fieldSetRef.current.classList.add("fieldset-focused");
   }
   function handleBlur(e) {
     if (e.target.value === "") {
-      labelRef.current.style.marginTop = "initial";
-      labelRef.current.style.fontSize = "initial";
-      labelRef.current.style.backgroundColor = "initial";
-      labelRef.current.style.padding = "initial";
+      labelRef.current.querySelector("label").classList.remove("custom-focused");
+      fieldSetRef.current.classList.remove("fieldset-focused");
     }
   }
   return (
-    <div className="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root" style={{ borderRadius: 4 }}>
+    <div
+      className="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+      style={{ borderRadius: 4 }}
+      ref={labelRef}
+    >
       <label
         style={{ transition: "200ms" }}
         className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="false"
-        ref={labelRef}
       >
         {label}
       </label>

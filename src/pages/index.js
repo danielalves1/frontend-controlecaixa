@@ -42,15 +42,14 @@ const HomePage = () => {
   }
 
   function getMovimentacao() {
-    movimentacaoController.getMovimentacao(filter.ano, filter.mes).then((rs) => {
-      console.log(rs);
+    movimentacaoController.getMovimentacao(filter.ano, filter.mes, filter.caixa).then((rs) => {
+      console.log({ rs, filter });
       if (Array.isArray(rs)) setMovimentacao(rs);
     });
   }
 
   function getBalancoGeral() {
     movimentacaoController.getBalancoGeral().then((rs) => {
-      console.log(rs);
       setBalanco(rs);
     });
   }
@@ -74,6 +73,7 @@ const HomePage = () => {
 
   const handleSelectChange = (event) => {
     filter.caixa = event.target.value;
+    if (filter.caixa === "") delete filter.caixa;
     setFilter({ ...filter });
   };
 
@@ -86,7 +86,7 @@ const HomePage = () => {
         <C.Grid container spacing={2}>
           <C.Grid item xs={12}>
             <Item>
-              <C.FormControl size="small" style={{minWidth: 200}}>
+              <C.FormControl size="small" style={{ minWidth: 200 }}>
                 <C.InputLabel id="demo-simple-select-label">Caixa</C.InputLabel>
                 <C.Select
                   color="primary"
@@ -95,7 +95,7 @@ const HomePage = () => {
                   label="Caixa"
                   onChange={handleSelectChange}
                 >
-                  <C.MenuItem value="">Selecione</C.MenuItem>
+                  <C.MenuItem value="">Todos</C.MenuItem>
                   {caixaList.map((caixa) => (
                     <C.MenuItem key={`caixa-${caixa.id}`} value={caixa.id}>
                       {caixa.id} - {caixa.descricao}

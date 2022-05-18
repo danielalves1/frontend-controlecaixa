@@ -1,0 +1,13 @@
+.custom-focused {
+  margin-top: -24px;
+  font-size: 0.75rem;
+  background-color: #fff;
+  padding: 0 5px !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  transform: translate(14px, 16px) scale(0.75) !important;
+  color: #1976d2 !important;
+}
+.fieldset-focused {
+  border-color: #1976d2 !important;
+  border-width: 2px !important;
+}
